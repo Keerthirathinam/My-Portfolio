@@ -1,0 +1,48 @@
+import React, { useState,useEffect } from "react";
+import "./jsontask.css";
+import "bootstrap/dist/css/bootstrap.css"
+import { Link } from "react-router-dom";
+import StarRatings from "react-star-ratings";
+
+
+export function Jsontask(){
+    const [details,setDetails]=useState([]);
+    useEffect(()=>{
+        fetch("https://portfoliokeerthana.netlify.app/data.json")
+        .then(info=>info.json())
+        .then(data=>setDetails(data))
+    },[])
+    return(
+       <div className="pt-5">
+        <h2 className="text-center">Shoes Collections</h2>
+        <div className="row col-lg-12 total pt-5">
+            
+            {details.map((display,index)=>(
+               
+                    
+                <div className="card col-lg-2 ml-5 p-2 mb-5" >
+                <img className="card-img-top container-fluid " src={display.Image} alt="Boat Xtend"/>
+                <div className="card-body">
+                  <h5 className="card-title">{display.Brand}</h5>
+                  <p className="card-text">{display.Description}</p>
+                  <p className="card-text">{display.Price}</p>
+                  <Link href="#" class="btn btn-primary ">View More</Link>
+                  <p> <StarRatings
+                            rating={display.star}
+                            starDimension="13px"
+                            starSpacing="15px"
+                            starRatedColor="gold"
+                            />
+                </p>
+                </div>
+                </div>
+              
+            
+
+            ))}
+
+
+        </div>
+        </div>
+    );
+}
